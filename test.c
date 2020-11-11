@@ -19,7 +19,7 @@ struct vereadorStruct
 
 struct votoStruct
 {
-    char cpf[11];
+    long long cpf;
     char cidade[20];
     char candidatoPrefeito[20];
     char partidoPrefeito[20];
@@ -27,54 +27,44 @@ struct votoStruct
     char partidoVereador[20];
 };
 
-
-
 int main()
-{
-    
+{    
     //uso de ponteiros
     FILE* prefeito;
     FILE* vereador;
     FILE* voto;
-
     prefeito = fopen("prefeito.txt", "a");
     vereador = fopen("vereador.txt", "a");
     voto = fopen("voto.txt", "a");
 
-    // checa por erro ao abrir arquivo
+    // checa por erro ao abrir arquivos
     if(prefeito==NULL)
     {
         printf("Falha ao abrir o arquivo\n");
         return 2;
     }
-    // checa por erro ao abrir arquivo
     if(vereador==NULL)
     {
         printf("Falha ao abrir o arquivo\n");
         return 3;
     }
-    // checa por erro ao abrir arquivo
     if(voto==NULL)
     {
         printf("Falha ao abrir o arquivo\n");
         return 4;
     }
 
-/* código (que repeti algumas vezes) para popular lista nos txt (obs.: uso Ubuntu):
-struct prefeitoStruct prefeitoMember = {"E", 4, "Y", "Teresopolis"};
-struct vereadorStruct vereadorMember = {"M", 16, "X", "Teresopolis"};
+    printf ("URNA ELETRONICA\n");
 
-fwrite(&prefeitoMember, sizeof(prefeitoMember), 1, prefeito);
-fwrite(&vereadorMember, sizeof(vereadorMember), 1, vereador);
-
-     fclose(prefeito);
-     */
-
-
-
-struct votoStruct votoMember = {"11652341579", "Petropolis", "B", "Y", "I", "Y"};
-
-fwrite(&votoMember, sizeof(votoMember), 1, voto);
+    long long cpfDigitado;
+    printf ("Insira seu CPF\n");
+    scanf("%lld", &cpfDigitado);  
+   
+    while (cpfDigitado < 1 || cpfDigitado > 99999999999) {
+        
+        printf ("Inválido! Insira seu CPF, com 11 números, sem pontos ou hífen\n");
+        scanf("%lld", &cpfDigitado);
+    }
 
 
 
@@ -82,6 +72,7 @@ fwrite(&votoMember, sizeof(votoMember), 1, voto);
 
 
 
+//teste leitura
 
     // struct prefeitoStruct prefeitoMember;
     // prefeito = fopen("prefeito.txt", "r");
@@ -104,3 +95,22 @@ fwrite(&votoMember, sizeof(votoMember), 1, voto);
 
     return 0;
 }
+
+
+
+/* código (que repeti algumas vezes) para popular lista nos txt (obs.: uso Ubuntu):
+struct prefeitoStruct prefeitoMember = {"E", 4, "Y", "Teresopolis"};
+struct vereadorStruct vereadorMember = {"M", 16, "X", "Teresopolis"};
+
+fwrite(&prefeitoMember, sizeof(prefeitoMember), 1, prefeito);
+fwrite(&vereadorMember, sizeof(vereadorMember), 1, vereador);
+
+
+struct votoStruct votoMember = {11652341579, "Petropolis", "B", "Y", "I", "Y"};
+
+fwrite(&votoMember, sizeof(votoMember), 1, voto);
+
+     fclose(prefeito);
+     fclose(vereador);
+     fclose(voto);
+     */
