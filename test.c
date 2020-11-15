@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory.h>
+
+#define MAX 20
 
 struct prefeitoStruct
 {
@@ -20,24 +23,48 @@ struct vereadorStruct
 struct votoStruct
 {
     long long cpf;
-    char* cidade;
-    char* candidatoPrefeito;
+    char cidade[40];
+    char candidatoPrefeito[40];
     // char partidoPrefeito[20];
-    char* candidatoVereador;
+    char candidatoVereador[40];
     // char partidoVereador[20];
 };
+// }criaVoto;
 
 long long cpfDigitado;
-char* votoParaPrefeitoPetropolis;
-char* votoParaVereadorPetropolis;
-char* votoParaPrefeitoTeresopolis;
-char* votoParaVereadorTeresopolis;
+char Prefeito;
+char partidoPrefeito;
+char Vereador;
+char partidoVereador;
+char cidade;
+int contadorVotosCandidatoA;
+int contadorVotosCandidatoB;
+int contadorVotosCandidatoC;
+int contadorVotosCandidatoD;
+int contadorVotosCandidatoE;
+int contadorVotosCandidatoF;
+int contadorVotosCandidatoG;
+int contadorVotosCandidatoH;
+int contadorVotosCandidatoI;
+int contadorVotosCandidatoJ;
+int contadorVotosCandidatoK;
+int contadorVotosCandidatoL;
+int contadorVotosCandidatoM;
+int contadorVotosPartidoX;
+int contadorVotosPartidoY;
+int contadorVotosPartidoZ;
+int contadorVotosPetropolis;
+int contadorVotosTeresopolis;
+int votoParaVereadorPetropolis;
+int votoParaPrefeitoTeresopolis;
+int votoParaVereadorTeresopolis;
 
 int carregaVotacao();              
-char* votoPrefeitoPetropolis();
-char* votoVereadorPetropolis();
-char* votoPrefeitoTeresopolis();
-char* votoVereadorTeresopolis();
+int votandoPetropolis(long long cpf);
+int votoVereadorPetropolis(char Prefeito,char partidoPrefeito);
+int votandoTeresopolis(long long cpf);
+int votoVereadorTeresopolis(char Prefeito,char partidoPrefeito);
+int registraVoto(char cidade,char Prefeito,char partidoPrefeito,char Vereador,char partidoVereador );
 int relatorio();
 
 
@@ -45,13 +72,14 @@ int main()
 {    
     printf ("URNA ELETRONICA\n");
 
-// //código para incluir voto
+// //código para incluir voto (desatualizado)
 //     FILE* voto5 = fopen("voto.txt", "a"); 
 // struct votoStruct votoMember = {11652341579, "Petropolis", "A", "H"};
 
 // fwrite(&votoMember, sizeof(votoMember), 1, voto5);
 
 //      fclose(voto5);
+     
      void menu() {
          printf("Digite 1 para votação, 2 para gerar relatório ou 3 para Sair: \n");
          int opcao;
@@ -78,37 +106,13 @@ int main()
 
      menu();   
 
-// FILE* voto4 = fopen("voto.txt", "r");
-// char* test;
-// struct votoStruct votoMember;
-//      while(fread(&votoMember, sizeof(struct votoStruct), 1, voto4)) {
-//         fscanf(voto4,"%s", test);
-//         printf("%s", test);
-        
-//     }     
-//     fclose(voto4);  
-
-//teste leitura
-// printf("%lld", votoMember.cpf);
-
-    // struct prefeitoStruct prefeitoMember;
-    // prefeito = fopen("prefeito.txt", "r");
-    // struct vereadorStruct vereadorMember;
-    // vereador = fopen("vereador.txt", "r");
-
-    // while(fread(&prefeitoMember, sizeof(struct prefeitoStruct), 1, prefeito)) 
-    //     printf ("%s", prefeitoMember.nome); 
-    //     printf ("%s", prefeitoMember.partido); 
-
-    //     while(fread(&vereadorMember, sizeof(struct vereadorStruct), 1, vereador)) 
-    //     printf ("%s", vereadorMember.nome); 
-    //     printf ("%s", vereadorMember.partido);     
-
     return 0;
+
+
 }
 
-int carregaVotacao() {  
-    
+int carregaVotacao() { 
+      
     printf ("Insira seu CPF\n");
     scanf("%lld", &cpfDigitado);  
    
@@ -136,35 +140,31 @@ int carregaVotacao() {
         } 
     }  
 
-// printf("%lld", votoMember.cpf);
-    // fread(&votoMember, sizeof(struct votoStruct), 1, voto);
-
     fclose(voto);
 
     FILE* voto2 = fopen("voto.txt", "a"); 
 
     printf("Digite 1 para voto em Petropolis, ou 2 para voto em Teresopolis: \n");
-    
-    struct votoStruct votoRegistrado;
+        
     int opcao;
         scanf("%d", &opcao);
         switch (opcao)
         {
         case 1:
-            votoRegistrado.cpf = cpfDigitado;
-            votoRegistrado.cidade = "Petropolis";
-            votoParaPrefeitoPetropolis = votoPrefeitoPetropolis();
-            votoParaVereadorPetropolis = votoVereadorPetropolis();
-            votoRegistrado.candidatoPrefeito = votoParaPrefeitoPetropolis;            
-            votoRegistrado.candidatoVereador = votoParaVereadorPetropolis;
-            fwrite(&votoRegistrado, sizeof(votoRegistrado), 1, voto);
+            
+            votandoPetropolis(cpfDigitado);
 
-
+            // votoRegistrado->cidade = "Petropolis";
+            // votoParaPrefeitoPetropolis = votoPrefeitoPetropolis();
+            // votoParaVereadorPetropolis = votoVereadorPetropolis();
+            // votoRegistrado.candidatoPrefeito = votoParaPrefeitoPetropolis;            
+            // votoRegistrado.candidatoVereador = votoParaVereadorPetropolis;
+            // fwrite(&votoRegistrado, sizeof(votoRegistrado), 1, voto);
+            
             break;
 
         case 2:
-            votoPrefeitoTeresopolis();
-            votoVereadorTeresopolis();
+            votandoTeresopolis(cpfDigitado);
             break;
         
         default:
@@ -181,53 +181,48 @@ int relatorio() {
 
     //uso de ponteiros cfme escopo do trabalho
     
-    FILE* prefeito = fopen("prefeito.txt", "r");
-    FILE* vereador = fopen("vereador.txt", "r");
     FILE* voto3 = fopen("voto.txt", "r"); 
 
     // checa por erro ao abrir arquivos
-    if(prefeito==NULL)
-    {
-        printf("Falha ao abrir o arquivo\n");
-        return 2;
-    }
-    if(vereador==NULL)
-    {
-        printf("Falha ao abrir o arquivo\n");
-        return 3;
-    }
     if(voto3==NULL)
     {
         printf("Falha ao abrir o arquivo\n");
         return 4;
     } 
 
-    struct prefeitoStruct prefeitoMember;
-    struct vereadorStruct vereadorMember;
 
-    fread(&prefeitoMember, sizeof(struct prefeitoStruct), 1, prefeito);
-    fread(&vereadorMember, sizeof(struct vereadorStruct), 1, vereador);
-    fclose(prefeito);
-    fclose(vereador);
+    // struct votoStruct *relatorioPorCidade = malloc(sizeof(struct votoStruct));
+    //  while(fread(&relatorioPorCidade, sizeof(struct votoStruct), 1, voto3)) {
+    //     printf("%s", relatorioPorCidade->cidade);        
+    // }     
+
     fclose(voto3);
+    return 0;
 
 }
 
-char* votoPrefeitoPetropolis(){
+int votandoPetropolis(long long cpf){
  printf("Escolha seu candidato a Prefeito\n");
  printf("Digite 1 para votar no candidato A, ou 2 para votar no candidato B: \n");
          int opcao;
+         
          scanf("%d", &opcao);
          switch (opcao)
          {
-            case 1:
+            case 1:                
+                Prefeito = "A";
+                partidoPrefeito = "Z";
+                votoVereadorPetropolis(Prefeito, partidoPrefeito);
                 printf("Voto registrado com sucesso\n");
-                return "A";
+                return 0;
                 break;
 
             case 2:
+                Prefeito = "B";
+                partidoPrefeito = "Y";
+                votoVereadorPetropolis(Prefeito, partidoPrefeito);
                 printf("Voto registrado com sucesso\n");
-                return "B";
+                return 0;
                 break;
             
             default:
@@ -236,7 +231,7 @@ char* votoPrefeitoPetropolis(){
         
      }
 
-char* votoVereadorPetropolis() {
+int votoVereadorPetropolis(char Prefeito,char partidoPrefeito) {
  printf("Escolha seu candidato a Vereador\n");
  printf("Digite 1 para votar no candidato H, digite 2 para votar no candidato I, ou digite 3 para votar no candidato J: \n");
          int opcao;
@@ -244,18 +239,30 @@ char* votoVereadorPetropolis() {
          switch (opcao)
          {
             case 1:
+                cidade = "Petropolis ";
+                Vereador = "H";
+                partidoVereador = "Z";
+                registraVoto(cidade,Prefeito,partidoPrefeito,Vereador,partidoVereador);                                
                 printf("Voto registrado com sucesso\n");
-                return "H";
+                return 0;
                 break;
 
             case 2:
+                cidade = "Petropolis ";
+                Vereador = "I";
+                partidoVereador = "Y";
+                registraVoto(cidade,Prefeito,partidoPrefeito,Vereador,partidoVereador );                                
                 printf("Voto registrado com sucesso\n");
-                return "I";
+                return 0;
                 break;
 
             case 3:
+                cidade = "Petropolis ";
+                Vereador = "J";
+                partidoVereador = "X";
+                registraVoto(cidade,Prefeito,partidoPrefeito,Vereador,partidoVereador );                                
                 printf("Voto registrado com sucesso\n");
-                return "J";
+                return 0;
                 break;
             
             default:
@@ -263,7 +270,7 @@ char* votoVereadorPetropolis() {
          }
      }
 
-char* votoPrefeitoTeresopolis() {
+int votandoTeresopolis(long long cpf) {
     printf("Escolha seu candidato a Prefeito\n");
     printf("Digite 1 para votar no candidato C, ou 2 para votar no candidato D: \n");
          int opcao;
@@ -285,7 +292,7 @@ char* votoPrefeitoTeresopolis() {
          }
      }
 
-char* votoVereadorTeresopolis() {
+int votoVereadorTeresopolis(char Prefeito,char partidoPrefeito) {
     printf("Escolha seu candidato a Vereador\n");
  printf("Digite 1 para votar no candidato K, digite 2 para votar no candidato L, ou digite 3 para votar no candidato M: \n");
          int opcao;
@@ -313,18 +320,45 @@ char* votoVereadorTeresopolis() {
 
 }
 
-/* código (que repeti algumas vezes) para popular lista nos txt (obs:eu uso Ubuntu):
-struct prefeitoStruct prefeitoMember = {"E", 4, "Y", "Teresopolis"};
-struct vereadorStruct vereadorMember = {"M", 16, "X", "Teresopolis"};
+int registraVoto(char cidade,char Prefeito,char partidoPrefeito,char Vereador,char partidoVereador ){
+     FILE *voto5 = NULL;
 
-fwrite(&prefeitoMember, sizeof(prefeitoMember), 1, prefeito);
-fwrite(&vereadorMember, sizeof(vereadorMember), 1, vereador);
+    struct votoStruct criaVoto;
 
-struct votoStruct votoMember = {11652341579, "Petropolis", "B", "Y", "I", "Y"};
+    int i = 0;
+    memset(&criaVoto, 0, sizeof(criaVoto));
+    criaVoto.cpf = cpfDigitado;
+    memcpy(criaVoto.cidade, cidade, 10);
+    memcpy(criaVoto.candidatoPrefeito, Prefeito, 1);
+    memcpy(criaVoto.candidatoVereador, Vereador, 1);
 
-fwrite(&votoMember, sizeof(votoMember), 1, voto);
+    //Open the file to write
+    if ((voto5 = fopen("voto.txt", "a+")) == NULL) {
+        printf("Error opening file to write\n");
+        return -1;
+    }
+        fwrite(&criaVoto, sizeof(criaVoto), 1, voto5);
+    if ((voto5 = fopen("voto.txt", "r")) == NULL) {
+        printf("Error opening file for read\n");
+        return -1;
+    }
+    fclose(voto5);
+    
+struct votoStruct votoTeste;
+if ((voto5 = fopen("voto.txt", "r")) == NULL) {
+        printf("Error opening file for read\n");
+        return -1;
+    }
+ while(fread(&votoTeste, sizeof(struct votoStruct), 1, voto5))
+    {
+        fread(&votoTeste, sizeof(votoTeste), 1, voto5);
+        
+        if (1)
+        {
+        printf("%lld\t%s\t%s\t%s\n", votoTeste.cpf, votoTeste.cidade, votoTeste.candidatoPrefeito, votoTeste.candidatoVereador);
+            /* code */
+        }
 
-     fclose(prefeito);
-     fclose(vereador);
-     fclose(voto);
-     */
+    }
+         fclose(voto5);
+}
