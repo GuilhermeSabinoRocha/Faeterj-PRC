@@ -71,6 +71,13 @@ int relatorio();
 int main()
 {    
     printf ("URNA ELETRONICA\n");
+     FILE* voto4 = fopen("voto.txt", "r");
+struct votoStruct votoMember2;
+     while(fread(&votoMember2, sizeof(struct votoStruct), 1, voto4)) {
+        printf("%s", votoMember2.cidade);
+        
+    }     
+    fclose(voto4);   
      
      void menu() {
          printf("Digite 1 para votação, 2 para gerar relatório ou 3 para Sair: \n");
@@ -96,7 +103,8 @@ int main()
          }
      }
 
-     menu();   
+     menu();  
+
 
     return 0;
 
